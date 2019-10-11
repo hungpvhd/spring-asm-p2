@@ -5,6 +5,16 @@
     <title>Title</title>
 </head>
 <body>
-
+    <ul>
+        <li th:each="student: ${student}">
+            <span th:text="${student.name}"></span>
+            <br>
+            <span th:text="${student.email}"></span>
+            <br>
+            <span th:text="${student.rollnumber}"></span>
+            <input class="checkbox" name="checkbox" th:type="checkbox">
+        </li>
+    </ul>
+<input type="submit" value="Add Student to Class"/></div>
 </body>
 </html>

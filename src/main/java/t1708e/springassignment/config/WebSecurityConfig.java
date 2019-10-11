@@ -17,13 +17,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public UserDetailsService userDetailsService() {
         return new MyUserDetailService();
     }
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/students", "/room").hasAnyRole("ADMIN,USER")
+                .antMatchers("/students", "/room")
+                .hasAnyRole("ADMIN,USER")
                 .and()
                 .formLogin()
                 .loginPage("/login")

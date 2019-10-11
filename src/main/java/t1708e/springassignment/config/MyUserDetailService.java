@@ -17,7 +17,7 @@ public class MyUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Student student = studentRepository.findById(email).orElse(null);
         if (student == null) {
-            throw new UsernameNotFoundException("Username not found");
+            throw new UsernameNotFoundException("Email");
         }
         //System.out.println(account.getRoles().stream().map(x -> x.getName()).toArray());
         UserDetails user =

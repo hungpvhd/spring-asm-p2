@@ -26,16 +26,16 @@ public class HomeController {
         return "login";
     }
 
-//    @RequestMapping(method = RequestMethod.POST, value = "/login")
-//    public String getStudent(Model model, @Valid Student student, BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            model.addAttribute("student", student);
-//            return "student/form";
-//        }
-//        Optional<Student> optionalStudent = studentRepository.findByEmailAndPassword(student.getEmail(), student.getPassword());
-//        if (optionalStudent == null){
-//            return "student/form";
-//        }
-//        return "redirect:/students";
-//    }
+    @RequestMapping(method = RequestMethod.POST, value = "/login")
+    public String getStudent(Model model, @Valid Student student, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("student", student);
+            return "student/form";
+        }
+        Optional<Student> optionalStudent = studentRepository.findByEmailAndPassword(student.getEmail(), student.getPassword());
+        if (optionalStudent == null){
+            return "student/form";
+        }
+        return "redirect:/students";
+    }
 }

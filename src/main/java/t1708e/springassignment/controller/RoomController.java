@@ -26,18 +26,22 @@ public class RoomController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model) {
+        List<Student> students = studentService.students();
         List<Room> rooms = roomService.rooms();
         model.addAttribute("rooms", rooms);
+        model.addAttribute("student", students);
         return "room/index";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{name}")
     public String detail(@PathVariable String name, Model model) {
+        List<Student> students = studentService.students();
         Room room = roomService.getByName(name);
         if (room == null) {
             return "error/404";
         }
         model.addAttribute("room", room);
-        return "redirect:/students";
+        model.addAttribute("student", students);
+        return "room/detail";
     }
 }
