@@ -14,18 +14,14 @@ public class MyUserDetailService implements UserDetailsService {
     StudentRepository studentRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Student student = studentRepository.findById(email).orElse(null);
-        if (student == null) {
-            throw new UsernameNotFoundException("Email");
-        }
-        //System.out.println(account.getRoles().stream().map(x -> x.getName()).toArray());
-        UserDetails user =
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        Student student = studentRepository.findByEmail(s);
+        UserDetails userDetails =
                 User.builder()
                         .username(student.getEmail())
                         .password(student.getPassword())
                         .roles("")
                         .build();
-        return user;
+        return userDetails;
     }
 }

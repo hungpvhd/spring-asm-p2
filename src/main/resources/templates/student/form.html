@@ -2,37 +2,35 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-        .error {
-            color: red;
-        }
-    </style>
+    <title>Create student</title>
 </head>
 <body>
-<h1>Hero form</h1>
 
-<form th:action="@{/students/create}" th:method="post" th:object="${student}">
-    <div>
-        Name <input type="text" th:field="*{name}">
-        <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-    </div>
-    <div>
-        Email <input type="text" th:field="*{email}">
-        <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-    </div>
-    <div>
-        Password <input type="text" th:field="*{password}">
-        <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
-    </div>
-    <div>
-        RollNumber <input type="text" th:field="*{rollnumber}">
-        <span class="error" th:if="${#fields.hasErrors('rollnumber')}" th:errors="*{rollnumber}"></span>
-    </div>
-    <div>
-        <input type="submit" value="Submit">
-        <input type="reset" value="Reset">
-    </div>
-</form>
+<div style="margin-left:  35%">
+    <h1>Create Student</h1>
+    <form th:action="@{/students/create}" th:method="post" th:object="${student}" style="width: 50%">
+        <div class="container">
+            <label><b>Name</b></label>
+            <input type="text" th:field="*{name}" placeholder="Enter name" required>
+            <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
+            <label><b>Roll Number</b></label>
+            <input type="text"  th:field="*{rollNumber}" placeholder="Enter Roll number" required>
+            <span class="error" th:if="${#fields.hasErrors('rollNumber')}" th:errors="*{rollNumber}"></span>
+
+            <label><b>Email</b></label>
+            <input type="text"  th:field="*{email}" placeholder="Enter Email" required>
+            <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+
+            <label><b>Password</b></label>
+            <input type="password"  th:field="*{password}" placeholder="Enter Password" required>
+            <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+
+            <button type="submit">Register</button>
+            <button type="reset">Cancel</button>
+        </div>
+    </form>
+</div>
+
 </body>
 </html>

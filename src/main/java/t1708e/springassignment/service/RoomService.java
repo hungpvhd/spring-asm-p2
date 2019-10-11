@@ -12,11 +12,12 @@ public class RoomService {
 
     @Autowired
     RoomRepository roomRepository;
-    public List<Room> rooms() {
+
+    public List<Room> getAll(){
         return roomRepository.findAll();
     }
 
-    public Room getByName(String name){
-        return roomRepository.findByName(name).orElse(null);
+    public Room getById(int id) {
+        return roomRepository.findById(id).orElse(null);
     }
 }

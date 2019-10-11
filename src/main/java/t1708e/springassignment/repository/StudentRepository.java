@@ -5,6 +5,8 @@ import t1708e.springassignment.entity.Student;
 
 import java.util.Optional;
 
-public interface StudentRepository extends JpaRepository<Student, String> {
+public interface StudentRepository extends JpaRepository<Student, Integer> {
     Optional<Student> findByEmailAndPassword(String email, String password);
+
+    Student findByEmail(String email);
 }

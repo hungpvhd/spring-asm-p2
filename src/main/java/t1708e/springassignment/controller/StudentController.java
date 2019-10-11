@@ -16,25 +16,9 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/students")
 public class StudentController {
+
     @Autowired
     StudentService studentService;
-
-    @RequestMapping(method = RequestMethod.GET)
-    public String index(Model model) {
-        List<Student> students = studentService.students();
-        model.addAttribute("students", students);
-        return "student/index";
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public String detail(@PathVariable String id, Model model) {
-        Student student = studentService.getById(id);
-        if (student == null) {
-            return "error/404";
-        }
-        model.addAttribute("student", student);
-        return "student/detail";
-    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/create")
     public String create(Model model) {
@@ -49,6 +33,16 @@ public class StudentController {
             return "student/form";
         }
         studentService.create(student);
-        return "redirect:/students";
+        return "redirect:/login";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    public String detail(@PathVariable int id, Model model) {
+        Student student = studentService.getById(id);
+        if (student == null) {
+            return "error/404";
+        }
+        model.addAttribute("student", student);
+        return "student/detail";
     }
 }

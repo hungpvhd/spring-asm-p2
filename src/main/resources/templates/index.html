@@ -2,12 +2,25 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Home</title>
 </head>
 <body>
-    <h1>Please login to continue!</h1>
-    <a href="login">login</a>
-    <br>
-    <a href="/students/create">register</a>
+<a th:href="@{'/student/' + ${student.studentId}}"><h1 th:text="'Welcome ' + ${student.name}"></h1></a>
+<form th:action="@{/logout}" method="post" style="margin-bottom: 20px">
+    <input type="submit" value="Sign Out"/>
+</form>
+<div>
+    <table>
+        <tr>
+            <th>Class Id</th>
+            <th>Class name</th>
+        </tr>
+        <tr th:each="room: ${room}">
+            <td th:text="${room.roomId}"></td>
+            <td th:text="${room.name}"></td>
+            <td><a th:href="@{'/room/' + ${room.roomId}}" th:text="Details"></a> </td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>

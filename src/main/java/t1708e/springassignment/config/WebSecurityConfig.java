@@ -13,10 +13,23 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return new MyUserDetailService();
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers( "/students/create").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .and()
+                .logout()
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/login")
+                .clearAuthentication(true)
+                .permitAll();
     }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
@@ -27,19 +40,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/students", "/room")
-                .hasAnyRole("ADMIN,USER")
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll();
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return new MyUserDetailService();
     }
 }

@@ -1,5 +1,7 @@
 package t1708e.springassignment.entity;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -10,23 +12,29 @@ import java.util.Set;
 @Entity
 public class Student {
     @Id
-    @NotNull(message = "Description can not be null or empty!")
-    @Email(message = "Invalid email")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int studentId;
+    @Email
+    @NotNull(message = "Không được bỏ trống email")
     private String email;
-    @NotNull(message = "Name can not be null or empty!")
-    @Size(min = 5, max = 30, message = "Name length must be 5 - 30 characters.")
+    @NotNull(message = "Không được bỏ trống mã sinh viên")
+    @Length(min = 7, message = "Mã sinh viên phải trên 7 ký tự")
+    private String rollNumber;
+    @NotNull(message = "Không được bỏ trống tên")
     private String name;
-    @NotNull(message = "Password can not be null or empty!")
-    @Size(min = 5, max = 30, message = "Password length must be 5 - 30 characters.")
+    @NotNull(message = "Không được bỏ trống mật khẩu")
     private String password;
-    @NotNull(message = "RollNumber can not be null or empty!")
-    @Size(min = 7, max = 30, message = "RollNumber length must be 7 - 30 characters.")
-    private String rollnumber;
-
-    @ManyToMany(mappedBy = "studentSet",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-                    CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    private int status;
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "studentSet")
     private Set<Room> roomSet;
+
+    public int getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
+    }
 
     public String getEmail() {
         return email;
@@ -34,6 +42,14 @@ public class Student {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getRollNumber() {
+        return rollNumber;
+    }
+
+    public void setRollNumber(String rollNumber) {
+        this.rollNumber = rollNumber;
     }
 
     public String getName() {
@@ -52,12 +68,12 @@ public class Student {
         this.password = password;
     }
 
-    public String getRollnumber() {
-        return rollnumber;
+    public int getStatus() {
+        return status;
     }
 
-    public void setRollnumber(String rollnumber) {
-        this.rollnumber = rollnumber;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public Set<Room> getRoomSet() {
@@ -67,8 +83,7 @@ public class Student {
     public void setRoomSet(Set<Room> roomSet) {
         this.roomSet = roomSet;
     }
-
-    public void addRoomSet(Room room) {
+    public void addRoom(Room room) {
         if (this.roomSet == null) {
             this.roomSet = new HashSet<>();
         }

@@ -8,22 +8,20 @@ import java.util.Set;
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int roomId;
     private String name;
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade =
-            {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinTable(name = "aptech_class_student",
-            joinColumns = @JoinColumn(name = "aptech_class_id"),
-                    inverseJoinColumns = @JoinColumn(name = "student_id"))
+    @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinTable(name = "room_student",
+            joinColumns = @JoinColumn(name = "room_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id"))
     private Set<Student> studentSet;
 
-    public long getId() {
-        return id;
+    public int getRoomId() {
+        return roomId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
     }
 
     public String getName() {
@@ -42,7 +40,7 @@ public class Room {
         this.studentSet = studentSet;
     }
 
-    public void addStudentSet(Student student) {
+    public void addStudent(Student student) {
         if (this.studentSet == null) {
             this.studentSet = new HashSet<>();
         }
